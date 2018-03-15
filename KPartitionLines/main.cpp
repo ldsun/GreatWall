@@ -1,23 +1,15 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include "KPartitionLines.h"
 
 using namespace std;
 
 int main()
 {
-    //Generate input
-    vector< pair< int, int > > input_points;
-    int arr_x[] = {0, 5, 10, 25};
-    int arr_y[] = {0, 8, 9, 18};
-    for (int i=0; i<sizeof(arr_x)/sizeof(int); i++) {
-        input_points.push_back(make_pair(arr_x[i], arr_y[i]));
-    }
+    vector< pair<int, int> > input_points = generate_input();
 
-    
-    for (int i=0; i<input_points.size(); i++) {
-        cout << input_points[i].first << " " << input_points[i].second << endl;
-    }
+    KPartitionLines(input_points, 5);
 
     return 0;
 }
