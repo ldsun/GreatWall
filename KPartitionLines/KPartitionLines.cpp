@@ -38,7 +38,6 @@ vector< pair<double, double> > KPartitionLines(vector< pair<double, double> > &i
     curr_point = input_points[curr_index];
     remain_length = get_length(curr_point, input_points[curr_index + 1]);
     while (curr_index < input_points.size() - 1) {
-        //cout << "remain length: " << remain_length << endl;
         if (remain_length >= segment_length) {
             local_segment_length = segment_length;
         } else {
@@ -53,7 +52,9 @@ vector< pair<double, double> > KPartitionLines(vector< pair<double, double> > &i
         curr_point = partition_point;
         remain_length -= local_segment_length;
 
-        if (remain_length == segment_length) {
+        cout << "remain length: " << remain_length << endl;
+
+        if ((remain_length - segment_length) < 0.01 ) {
             curr_index += 1;
             curr_point = input_points[curr_index];
             remain_length = get_length(curr_point, input_points[curr_index + 1]);

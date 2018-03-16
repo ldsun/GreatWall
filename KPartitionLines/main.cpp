@@ -27,7 +27,7 @@ vector< pair<double, double> > generate_input()
 int main()
 {
     vector< pair<double, double> > input_points = generate_input();
-    int k = 5;
+    int k = 8;
     vector< pair<double, double> > result;
 
     result = KPartitionLines(input_points, k);
