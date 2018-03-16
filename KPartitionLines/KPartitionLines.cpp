@@ -6,6 +6,32 @@
 
 using namespace std;
 
+pair<double, double> GetPartitionPoint(pair<double, double> a, pair<double, double> b, double length, double segment_length)
+{
+    pair<double, double> result;
+
+    //cout << "Debug: " << length << segment_length << endl;
+    if (length == segment_length) {
+        result = b;
+    } else {
+        result.first = a.first + (b.first - a.first) * segment_length / length;
+        result.second = a.second + (b.second - a.second) * segment_length / length;
+    }
+    //cout << "Debug: " << result.first << " " << result.second << endl;
+
+    return result;
+
+}
+
+double get_length(pair<double, double> a, pair<double, double> b)
+{
+    double result = 0;
+
+    result = sqrt(pow((b.first - a.first), 2) + pow((b.second - a.second), 2));
+
+    return result;
+}
+
 vector< pair<double, double> > KPartitionLines(vector< pair<double, double> > &input_points, int k)
 {
     double total_length = 0;
@@ -60,34 +86,6 @@ vector< pair<double, double> > KPartitionLines(vector< pair<double, double> > &i
             remain_length = get_length(curr_point, input_points[curr_index + 1]);
         }
     }
-
-    return result;
-}
-
-
-pair<double, double> GetPartitionPoint(pair<double, double> a, pair<double, double> b, double length, double segment_length)
-{
-    pair<double, double> result;
-
-    //cout << "Debug: " << length << segment_length << endl;
-    if (length == segment_length) {
-        result = b;
-    } else {
-        result.first = a.first + (b.first - a.first) * segment_length / length;
-        result.second = a.second + (b.second - a.second) * segment_length / length;
-    }
-    //cout << "Debug: " << result.first << " " << result.second << endl;
-
-    return result;
-
-}
-
-
-double get_length(pair<double, double> a, pair<double, double> b)
-{
-    double result = 0;
-
-    result = sqrt(pow((b.first - a.first), 2) + pow((b.second - a.second), 2));
 
     return result;
 }
