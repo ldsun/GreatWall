@@ -2,8 +2,8 @@
 
 using namespace std;
 
-vector< pair< int, int > > generate_input();
+vector< pair<double, double> > KPartitionLines(vector< pair<double, double> > &input_points, int k);
 
-vector< pair<int, int> > KPartitionLines(vector< pair<int, int> > &input_points, int k);
+double get_length(pair<double, double> a, pair<double, double> b);
 
-int get_length(pair<int, int> a, pair<int, int> b);
+pair<double, double> GetPartitionPoint(pair<double, double> a, pair<double, double> b, double length, double segment_length);

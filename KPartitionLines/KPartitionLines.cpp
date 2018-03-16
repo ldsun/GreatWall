@@ -6,63 +6,87 @@
 
 using namespace std;
 
-vector< pair<int, int> > generate_input()
+vector< pair<double, double> > KPartitionLines(vector< pair<double, double> > &input_points, int k)
 {
+    double total_length = 0;
+    double segment_length = 0;
+    vector< pair<double, double> > result;
+    int curr_index = 0;
+    double remain_length = 0;
+    pair <double, double> curr_point;
+    pair <double, double> partition_point;
+    double local_segment_length = 0;
 
-	//Generate input
-    vector< pair< int, int > > input_points;
-    int arr_x[] = {0, 5, 10, 25};
-    int arr_y[] = {0, 8, 9, 18};
-    for (int i=0; i<sizeof(arr_x)/sizeof(int); i++) {
-        input_points.push_back(make_pair(arr_x[i], arr_y[i]));
+    // Sanity check
+    if (input_points.size() < 2) {
+        return vector< pair<double, double> >();
     }
 
-    cout << "Generated inputs: " << endl;
-    for (int i=0; i<input_points.size(); i++) {
-        cout << input_points[i].first << " " << input_points[i].second << endl;
+    // Sanity check
+    if (k == 0) {
+        return vector< pair<double, double> >();
     }
 
-    return input_points;
-}
-
-vector< pair<int, int> > KPartitionLines(vector< pair<int, int> > &input_points, int k)
-{
-	if (input_points.size() < 2) {
-		return vector< pair<int, int> >();
-	}
-
-	if (k == 0) {
-		return vector< pair<int, int> >();
-	}
-
-	int total_length = 0;
-    for (int i=1; i<input_points.size(); i++) {
-        total_length += get_length(input_points[i], input_points[i-1]);
+    // Calculate length of segment
+    for (int i=0; i<input_points.size()-1; i++) {
+        total_length += get_length(input_points[i], input_points[i+1]);
     }
-    cout << "total length: " << total_length << endl;
+    segment_length = total_length / k;
+    cout << "segment_length is: " << segment_length << endl;
 
-    int segment_length = total_length / k;
+    // Traverse the lines to get partition points
+    curr_point = input_points[curr_index];
+    remain_length = get_length(curr_point, input_points[curr_index + 1]);
+    while (curr_index < input_points.size() - 1) {
+        //cout << "remain length: " << remain_length << endl;
+        if (remain_length >= segment_length) {
+            local_segment_length = segment_length;
+        } else {
+            curr_index += 1;
+            curr_point = input_points[curr_index];
+            local_segment_length = segment_length - remain_length;
+            remain_length = get_length(curr_point, input_points[curr_index + 1]);
+        }
 
-    return vector< pair<int, int> >();
+        partition_point = GetPartitionPoint(curr_point, input_points[curr_index + 1], remain_length, local_segment_length);
+        result.push_back(partition_point);
+        curr_point = partition_point;
+        remain_length -= local_segment_length;
+
+        if (remain_length == segment_length) {
+            curr_index += 1;
+            curr_point = input_points[curr_index];
+            remain_length = get_length(curr_point, input_points[curr_index + 1]);
+        }
+    }
+
+    return result;
+}
+
+
+pair<double, double> GetPartitionPoint(pair<double, double> a, pair<double, double> b, double length, double segment_length)
+{
+    pair<double, double> result;
+
+    //cout << "Debug: " << length << segment_length << endl;
+    if (length == segment_length) {
+        result = b;
+    } else {
+        result.first = a.first + (b.first - a.first) * segment_length / length;
+        result.second = a.second + (b.second - a.second) * segment_length / length;
+    }
+    //cout << "Debug: " << result.first << " " << result.second << endl;
+
+    return result;
 
 }
 
 
-pair<int, int> GetPartitionPoint(pair<int, int> a, pair<int, int> b, int segment_length)
+double get_length(pair<double, double> a, pair<double, double> b)
 {
-	int length = get_length(b, a);
-	if (length < segment_length) {
-		return pair<int, int>();
-	}
+    double result = 0;
 
-}
+    result = sqrt(pow((b.first - a.first), 2) + pow((b.second - a.second), 2));
 
-
-int get_length(pair<int, int> a, pair<int, int> b)
-{
-	int result = 0;
-
-	result = sqrt(pow((b.first - a.first), 2) + pow((b.second - a.second), 2));
-
-	return result;
+    return result;
 }
