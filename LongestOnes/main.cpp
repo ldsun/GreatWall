@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
     // Generate input
-    vector <int> input {0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1};
+    vector <int> input {0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1};
     int k = 5;
 
     int start = 0, end = 0;
