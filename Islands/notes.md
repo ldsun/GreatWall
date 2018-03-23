@@ -15,3 +15,7 @@ Answer is 1
 00011
 
 Answer is 3
+
+Analysis:
+Solution 1: DFS
+Solution 2: Union-Find

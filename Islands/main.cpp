@@ -8,10 +8,10 @@ int main()
 {
     //Generate input
     vector < vector< int > > input {
-        {1, 1, 1, 1, 0},
-        {1, 1, 0, 1, 0},
         {1, 1, 0, 0, 0},
-        {0, 0, 0, 0, 0}
+        {1, 1, 0, 0, 0},
+        {0, 0, 1, 0, 0},
+        {0, 0, 0, 1, 1}
     };
 
     //Visualize input
@@ -23,7 +23,9 @@ int main()
     }
 
     //call the program
-    countIslands(input);
+    int n = countIslands(input);
+
+    cout << "output is: " << n << endl;
 
     //Visualize output
     return 0;
